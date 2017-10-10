@@ -7,9 +7,23 @@ CREATE TABLE Airport
   PRIMARY KEY(callsign)
 );
 
-CREATE TABLE Ticket
-( to VARCHAR(3) REFERENCES callsign NOT NULL,
-  from VARCHAR(3) REFERENCES callsign NOT NULL,
-  booking_time TIMESTAMP REFERENCES  NOT NULL,
+CREATE TABLE Plane
+( depart_time TIMESTAMP NOT NULL,
+  arrive VARCHAR(3) REFERENCES Airport(callsign) NOT NULL,
+  depart VARCHAR(3) REFERENCES Airport(callsign) NOT NULL,
+  carrier VARCHAR(64) NOT NULL,
+  PRIMARY KEY(depart_time, arrive, depart)
+);
 
+CREATE TABLE Ticket
+( arrive VARCHAR(3) REFERENCES Plane(arrive) NOT NULL,
+  depart VARCHAR(3) REFERENCES Plane(depart) NOT NULL,
+  depart_time TIMESTAMP REFERENCES Plane(depart_time) NOT NULL,
+  booking_date DATE NOT NULL,
+  price FLOAT NOT NULL,
+  occupant_age VARCHAR(6) NOT NULL,
+  seat_class VARCHAR(5) NOT NULL,
+  refundable BOOLEAN NOT NULL,
+  PRIMARY KEY(arrive, depart, depart_time, booking_date,
+              occupant_age, seat_class, refundable)
 );
