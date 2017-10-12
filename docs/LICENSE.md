@@ -1,6 +1,6 @@
 BSD 3-Clause License
 
-Copyright (c) 2017, Matt Dickson, Ziad Elarab, Sarah Fordham, Nat Huffman, Brain Lopez 
+Copyright (c) 2017, Matt Dickson, Ziad Elarab, Sarah Fordham, Nat Huffman, Brian Lopez 
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
