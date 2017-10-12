@@ -1,0 +1,14 @@
+{
+  "Flight": [
+    {
+      "id" : "01",
+      "depart": "SAN",
+      "arrive": "RDU"
+    },
+    {
+      "id": "02",
+      "depart": "JFK",
+      "arrive": "RDU"
+    }
+  ]
+}

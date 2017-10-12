@@ -26,7 +26,8 @@ CREATE TABLE Flight
   arrive VARCHAR(3) REFERENCES Airport(callsign) NOT NULL,
   depart VARCHAR(3) REFERENCES Airport(callsign) NOT NULL,
   carrier VARCHAR(64) REFERENCES Airline(name) NOT NULL,
-  PRIMARY KEY(flight_code, depart_time)
+  PRIMARY KEY(flight_code, depart_time),
+  UNIQUE(flight_code, depart_time)
 );
 
 CREATE TABLE ConnectingFlight
@@ -40,21 +41,12 @@ CREATE TABLE Trip
 ( id NUMERIC(20) NOT NULL,
   booking_date DATE NOT NULL,
   price FLOAT NOT NULL,
-  occupant_age VARCHAR(6) NOT NULL,
-  seat_class VARCHAR(5) NOT NULL,
-  refundable BOOLEAN NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT positive_id CHECK(
     id > 0
   ),
   CONSTRAINT positive_price CHECK (
     price > 0
-  ),
-  CONSTRAINT seat_exists CHECK(
-    seat_class IN ('first', 'coach')
-  ),
-  CONSTRAINT avail_ages CHECK (
-    occupant_age IN ('child', 'adult', 'senior')
   )
 );
 
@@ -69,3 +61,16 @@ CREATE TABLE Airline
   name VARCHAR(64) NOT NULL,
   PRIMARY KEY (id)
 );
+
+INSERT INTO Airline VALUES
+  (0, 'Alaskan Airlines'),
+  (1, 'Allegiant Air'),
+  (2, 'American Airlines'),
+  (3, 'Delta Airlines'),
+  (4, 'Frontier Airlines'),
+  (5, 'Hawaiian Airlines'),
+  (6, 'Jet Blue'),
+  (7, 'Spirit Airlines'),
+  (8, 'United Airlines'),
+  (9, 'Virgin America')
+
