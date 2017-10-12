@@ -1,6 +1,6 @@
 import json
 import requests
-import html
+import records
 import os
 
 
@@ -16,16 +16,20 @@ def generate_request():
 
 
 
-def get_API_key():
-    key_location = os.path.join(data_path, 'key.json')
+def get_api_url():
+    key_location = os.path.join(data_path, 'api_url.json')
     with open(key_location, 'r') as key_file:
-        return json.load(key_file)['key']
+        return json.load(key_file)['url']
 
+
+def get_db_url():
+    
 
 if __name__ == '__main__':
     data_path = os.path.abspath(os.path.join(os.getcwd(), "..", "..", "data"))
     trip_routes = os.path.join(data_path, 'TripRoutes.json')
-    url = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=' + get_API_key()
+    api_url = get_api_url()
+    db_url = get_db_url()
     route_dict = {}
     make_route_dict()
     generate_request()
