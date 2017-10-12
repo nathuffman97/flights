@@ -1,7 +1,11 @@
 # Flight Data
-CS316 project for Matt Dickson, Ziad Elarab, Sarah Fordham, Nat Huffman, Brain Lopez, Fall 2017.
+CS316 project for Matt Dickson, Ziad Elarab, Sarah Fordham, Nat Huffman, Brian Lopez, Fall 2017.
 
 ## Getting Started
+
+To load create an instance of the SQL database, use  
+`dropdb flights; createdb flights; psql flights -af create-flights.sql`.  
+This creates all tables and triggers, and inserts some placeholder data into them.
 
 
 ## Deployment
@@ -17,7 +21,7 @@ This project uses [SemVer](http://semver.org) for visioning.
 * Ziad Elarab
 * Sarah Fordham
 * Natalie Huffman
-* Brain Lopez
+* Brian Lopez
 
 ## License
 
