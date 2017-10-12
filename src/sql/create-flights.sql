@@ -1,3 +1,8 @@
+-- Database: fights
+
+-- DROP DATABASE fights;
+
+DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 
 CREATE TABLE Airport
@@ -20,22 +25,23 @@ CREATE TABLE People
  )
 );
 
+CREATE TABLE Airline
+( id INTEGER NOT NULL,
+  name VARCHAR(64) UNIQUE NOT NULL,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE Flight
-( flight_code VARCHAR(32) NOT NULL,
+( id NUMERIC(20) NOT NULL,
+  flight_code VARCHAR(32) NOT NULL,
   depart_time TIMESTAMP NOT NULL,
   arrive VARCHAR(3) REFERENCES Airport(callsign) NOT NULL,
   depart VARCHAR(3) REFERENCES Airport(callsign) NOT NULL,
   carrier VARCHAR(64) REFERENCES Airline(name) NOT NULL,
-  PRIMARY KEY(flight_code, depart_time),
-  UNIQUE(flight_code, depart_time)
+  UNIQUE(flight_code, depart_time),
+  PRIMARY KEY(id)
 );
 
-CREATE TABLE ConnectingFlight
-( trip_id INTEGER REFERENCES Trip(id) NOT NULL,
-  flight_code VARCHAR(32) REFERENCES Flight(flight_code) NOT NULL,
-  depart_time TIMESTAMP REFERENCES Flight(depart_time) NOT NULL,
-  PRIMARY KEY (trip_id, flight_code, depart_time)
-);
 
 CREATE TABLE Trip
 ( id NUMERIC(20) NOT NULL,
@@ -50,16 +56,16 @@ CREATE TABLE Trip
   )
 );
 
+CREATE TABLE ConnectingFlight
+( trip_id NUMERIC(20) REFERENCES Trip(id) NOT NULL,
+  flight_id NUMERIC(20) REFERENCES Flight(id) NOT NULL,
+  PRIMARY KEY (trip_id, flight_id)
+);
+
 CREATE TABLE TripTaker
 ( uid INTEGER REFERENCES People(id) NOT NULL,
   tid INTEGER REFERENCES Trip(id) NOT NULL,
   PRIMARY KEY (uid, tid)
-);
-
-CREATE TABLE Airline
-( id INTEGER NOT NULL,
-  name VARCHAR(64) NOT NULL,
-  PRIMARY KEY (id)
 );
 
 INSERT INTO Airline VALUES
@@ -73,4 +79,3 @@ INSERT INTO Airline VALUES
   (7, 'Spirit Airlines'),
   (8, 'United Airlines'),
   (9, 'Virgin America')
-
