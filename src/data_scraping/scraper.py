@@ -2,6 +2,7 @@ import json
 import requests
 import records
 import os
+from twilio.rest import TwilioRestClient
 
 
 def make_route_dict():
@@ -22,7 +23,10 @@ def get_api_url():
         return json.load(key_file)['url']
 
 
-def get_db_url():
+def set_up_twilio():
+
+
+#def get_db_url():
 
 
 if __name__ == '__main__':
@@ -33,3 +37,4 @@ if __name__ == '__main__':
     route_dict = {}
     make_route_dict()
     generate_request()
+    set_up_twilio()

@@ -80,15 +80,25 @@ INSERT INTO Airline VALUES
   (8, 'United Airlines'),
   (9, 'Virgin America');
 
+INSERT INTO Airport VALUES
+  ('RDU', 'Raleigh', 'Raleigh-Durham Intl Airport'),
+  ('JFK', 'New York City', 'John F. Kennedy Intl Airpot'),
+  ('LGA', 'New York City', 'LaGuardia Airport'),
+  ('IAD', 'Washington, DC', 'Washington Dulles Intl Airport'),
+  ('LAX', 'Los Angeles', 'Los Angeles Intl Airport'),
+  ('SFO', 'San Francisco', 'San Francisco Itnl Airport'),
+  ('DFW', 'Dallas', 'Dallas-Fort Worth Intl Airport'),
+  ('MIA', 'Miami', 'Miami Intl Airport'),
+  ('LHR', 'London', 'London Heathrow Intl Airport'),
+  ('PVG', 'Shanghai', 'Shanghai Pudong Intl Airport'),
+  ('PEK', 'Beijing', 'Beijing Capital Intl Airport'),
+  ('ORD', 'Chicago', 'Chicago O''Hare Intl Airport'),
+  ('SAN', 'San Diego', 'San Diego Intl Airport');
+
 INSERT INTO People VALUES
   (1, 'ze'),
   (2, 'ml55'),
   (3, 'hh1');
-
-INSERT INTO Airport VALUES
-  ('RDU', 'Raleigh', 'Raleigh-Durham Intl Airport'),
-  ('LAX', 'Los Angeles', 'Los Angeles Intl Airport'),
-  ('LGA', 'New York City', 'Laguardia Intl Airport');
 
 INSERT INTO Trip VALUES
   (11, '2017-10-12', 200),
