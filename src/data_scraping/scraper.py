@@ -23,7 +23,7 @@ def get_api_url():
 
 
 def get_db_url():
-    
+
 
 if __name__ == '__main__':
     data_path = os.path.abspath(os.path.join(os.getcwd(), "..", "..", "data"))
