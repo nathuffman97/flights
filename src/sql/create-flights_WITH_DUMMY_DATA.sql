@@ -102,21 +102,48 @@ INSERT INTO People VALUES
 
 INSERT INTO Trip VALUES
   (11, '2017-10-12', 200),
+  (12, '2017-10-12', 150),
   (22, '2017-10-12', 400),
   (33, '2017-08-16', 300);
 
 INSERT INTO TripTaker VALUES
   (2, 11),
+  (2, 12),
   (1, 22),
+  (1, 33),
   (3, 33);
 
 INSERT  INTO  Flight VALUES
   (0, 'XX1', '2017-12-15 01:30:00', 'LGA', 'RDU', 'American Airlines'),
   (1, 'XX3', '2017-12-15 16:00:00', 'LGA', 'RDU', 'United Airlines'),
-  (2, 'XX4', '2017-12-15 13:00:00', 'LAX', 'RDU', 'American Airlines');
+  (2, 'XX4', '2017-12-15 13:00:00', 'LAX', 'RDU', 'American Airlines'),
+  (3, 'XX5', '2017-12-16 14:00:00', 'LAX', 'RDU', 'American Airlines');
 
 INSERT INTO ConnectingFlight VALUES
   (11, 0),
+  (11, 1),
+  (12, 0),
+  (12, 1),
   (22, 1),
-  (33, 2);
+  (33, 0);
+
+
+--Get flight options for the day 12/15/2017 for RDU -> LGA
+SELECT * FROM Flight WHERE depart_time BETWEEN '2017-12-15 00:00:00' AND '2017-12-15 23:59:59'
+  AND depart = 'RDU' AND arrive = 'LGA';
+
+--Get flight information for a user's (ze) trips
+SELECT flight_code, depart, arrive, depart_time, carrier, price FROM Flight, Trip, ConnectingFlight, People, TripTaker
+  WHERE People.username = 'ze' AND People.id = TripTaker.pid AND TripTaker.tid = Trip.id AND
+        Flight.id = ConnectingFlight.flight_id AND Trip.id = ConnectingFlight.trip_id;
+
+-- Select all people for a given flight
+SELECT DISTINCT username FROM People, TripTaker, Trip, ConnectingFlight, Flight WHERE
+  Flight.flight_code = 'XX3' AND Flight.depart_time BETWEEN '2017-12-15 00:00:00' AND '2017-12-15 23:59:59'
+  AND Flight.id = ConnectingFlight.flight_id AND ConnectingFlight.trip_id = Trip.id AND Trip.id = TripTaker.tid
+  AND TripTaker.pid = People.id;
+
+
+
+
 

@@ -2,8 +2,7 @@ import json
 import requests
 import records
 import os
-from twilio.rest import TwilioRestClient
-
+from .textme import Text
 
 def make_route_dict():
     with open(trip_routes, 'r') as routes_file:
@@ -13,7 +12,7 @@ def make_route_dict():
 
 
 def generate_request():
-    with open(os.path.join(data_path, 'request.json')) as request_file:
+    
 
 
 
@@ -23,10 +22,9 @@ def get_api_url():
         return json.load(key_file)['url']
 
 
-def set_up_twilio():
-
-
-#def get_db_url():
+def get_db_url():
+    file_loaction = os.path.join(data_path, 'db_url.json')
+    with json.load(open(file_loaction)) as data_file:
 
 
 if __name__ == '__main__':
@@ -35,6 +33,7 @@ if __name__ == '__main__':
     api_url = get_api_url()
     db_url = get_db_url()
     route_dict = {}
+
     make_route_dict()
     generate_request()
-    set_up_twilio()
+    text_interface = Text(data_path)
