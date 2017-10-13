@@ -1,0 +1,19 @@
+Natalie Huffman
+
+Planned and drew the E/R diagram, wrote out list of assumptions about data, helped to plan database tables.
+
+Matthew Dickson
+
+Finalized database tables, wrote SQL code for creating tables, constraints, triggers, etc. Also set up Amazon Web Services accounts for team to host the database.
+
+Ziad Elarab
+
+Wrote description of application for plan, wrote sample data to populate database.
+
+Sarah Fordham
+
+Wrote and tested SQL statements for Task 5 based off of Ziad's sample data.
+
+Brian Lopez
+
+Wrote up description of Web interface, helped to plan database tables.
