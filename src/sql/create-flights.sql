@@ -63,9 +63,9 @@ CREATE TABLE ConnectingFlight
 );
 
 CREATE TABLE TripTaker
-( uid INTEGER REFERENCES People(id) NOT NULL,
+( pid INTEGER REFERENCES People(id) NOT NULL,
   tid INTEGER REFERENCES Trip(id) NOT NULL,
-  PRIMARY KEY (uid, tid)
+  PRIMARY KEY (pid, tid)
 );
 
 INSERT INTO Airline VALUES
@@ -78,4 +78,35 @@ INSERT INTO Airline VALUES
   (6, 'Jet Blue'),
   (7, 'Spirit Airlines'),
   (8, 'United Airlines'),
-  (9, 'Virgin America')
+  (9, 'Virgin America');
+
+INSERT INTO People VALUES
+  (1, 'ze'),
+  (2, 'ml55'),
+  (3, 'hh1');
+
+INSERT INTO Airport VALUES
+  ('RDU', 'Raleigh', 'Raleigh-Durham Intl Airport'),
+  ('LAX', 'Los Angeles', 'Los Angeles Intl Airport'),
+  ('LGA', 'New York City', 'Laguardia Intl Airport');
+
+INSERT INTO Trip VALUES
+  (11, '2017-10-12', 200),
+  (22, '2017-10-12', 400),
+  (33, '2017-08-16', 300);
+
+INSERT INTO TripTaker VALUES
+  (2, 11),
+  (1, 22),
+  (3, 33);
+
+INSERT  INTO  Flight VALUES
+  (0, 'XX1', '2017-12-15 01:30:00', 'LGA', 'RDU', 'American Airlines'),
+  (1, 'XX3', '2017-12-15 16:00:00', 'LGA', 'RDU', 'United Airlines'),
+  (2, 'XX4', '2017-12-15 13:00:00', 'LAX', 'RDU', 'American Airlines');
+
+INSERT INTO ConnectingFlight VALUES
+  (11, 0),
+  (22, 1),
+  (33, 2);
+
