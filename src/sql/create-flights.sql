@@ -101,9 +101,9 @@ INSERT INTO TripTaker VALUES
   (3, 33);
 
 INSERT  INTO  Flight VALUES
-  (0, 'XX1', '2017-12-15 01:30:00', 'RDU', 'LGA', 'American Airlines'),
-  (1, 'XX3', '2017-12-15 16:00:00', 'RDU', 'LGA', 'United Airlines'),
-  (2, 'XX4', '2017-12-15 13:00:00', 'RDU', 'LAX', 'American Airlines');
+  (0, 'XX1', '2017-12-15 01:30:00', 'LGA', 'RDU', 'American Airlines'),
+  (1, 'XX3', '2017-12-15 16:00:00', 'LGA', 'RDU', 'United Airlines'),
+  (2, 'XX4', '2017-12-15 13:00:00', 'LAX', 'RDU', 'American Airlines');
 
 INSERT INTO ConnectingFlight VALUES
   (11, 0),
