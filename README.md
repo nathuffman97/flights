@@ -4,8 +4,8 @@ CS316 project for Matt Dickson, Ziad Elarab, Sarah Fordham, Nat Huffman, Brian L
 ## Getting Started
 
 To load create an instance of the SQL database, use  
-`dropdb flights; createdb flights; psql flights -af create-flights.sql`.  
-This creates all tables and triggers, and inserts some placeholder data into them.
+`dropdb flights; createdb flights; psql flights -af create-flights_WITH_DUMMY_DATA.sql`.  
+This creates all tables and triggers, and inserts some placeholder data into them, as well as running some sample queries of the database.
 
 
 ## Deployment
