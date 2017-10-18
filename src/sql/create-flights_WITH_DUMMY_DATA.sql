@@ -64,7 +64,7 @@ CREATE TABLE ConnectingFlight
 
 CREATE TABLE TripTaker
 ( pid INTEGER REFERENCES People(id) NOT NULL,
-  tid INTEGER REFERENCES Trip(id) NOT NULL,
+  tid NUMERIC(20) REFERENCES Trip(id) NOT NULL,
   PRIMARY KEY (pid, tid)
 );
 

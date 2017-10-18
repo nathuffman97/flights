@@ -1,0 +1,12 @@
+{"error": 
+  {"errors": [
+      {
+        "domain": "global", 
+        "reason": "badRequest", 
+        "message": "Invalid inputs for request id \"gZVfc0MKfIFMvBsbY0RTzQ\": Input error for \"tripOptions\" (search), \"x.slices\" is required."
+      }
+  ],
+        "code": 400, 
+        "message": "Invalid inputs for request id \"gZVfc0MKfIFMvBsbY0RTzQ\": Input error for \"tripOptions\" (search), \"x.slices\" is required."
+  }
+}
