@@ -22,10 +22,10 @@ if __name__ == '__main__':
     # text_api = Text(data_path)
     flight_api = QPX(data_path)
     db = DB(data_path)
-    conn = db.get_connection()
-    # flight_api.make_request('SAN', 'RDU', '2017-11-10')
+    #db._url
+    result_dict = flight_api.make_request(depart='SAN', arrive='RDU', date='2017-11-10')
+    db.insert_trip_data(result_dict)
 
     #db_url = get_db_url()
     route_dict = {}
 
-    #make_route_dict()
