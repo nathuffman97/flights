@@ -24,6 +24,7 @@ if __name__ == '__main__':
     db = DB(data_path)
     #db._url
     result_dict = flight_api.make_request(depart='SAN', arrive='RDU', date='2017-11-10')
+    print(result_dict)
     db.insert_trip_data(result_dict)
 
     #db_url = get_db_url()

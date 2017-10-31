@@ -27,7 +27,7 @@ class Inserter():
         print(command)
         self.cur.execute(command)
 
-    def execute_command(self, name, args):
+    def execute_command(self, name, *args):
         try:
             print("EXECUTE {} ({}{}), ({})".format(name, '%s, '*(len(args)-1), '%s', ", ".join(args)))
             self.cur.execute("EXECUTE {} ({}{})".format(name, '%s, '*(len(args)-1), '%s'), args)
