@@ -1,6 +1,5 @@
 import openpyxl
 import os
-import psycopg2
 from src.data_scraping.__apis__.inserter import Inserter
 import time
 
