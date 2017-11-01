@@ -14,6 +14,7 @@ if __name__ == '__main__':
     i = 0
     while True:
         i = i % 3 + 1
+        start = time.time()
         with open(os.path.join(data_path, '{}.txt'.format(i))) as file:
             for line in file:
                 print(line)
@@ -23,4 +24,5 @@ if __name__ == '__main__':
                 for result in result_list:
                     db.insert_trip_data(result)
         i += 1
-        time.sleep(tomorrow)
+        end = time.time()
+        time.sleep(tomorrow - (start - end))
