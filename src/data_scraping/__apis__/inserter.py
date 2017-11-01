@@ -24,12 +24,15 @@ class Inserter():
             return json_file['password'], json_file['user']
 
     def prepare_command(self, command):
-        print(command)
-        self.cur.execute(command)
-
-    def execute_command(self, name, *args):
         try:
-            print("EXECUTE {} ({}{}), ({})".format(name, '%s, '*(len(args)-1), '%s', ", ".join(args)))
+            print(command)
+            self.cur.execute(command)
+        except psycopg2.ProgrammingError as e:
+            self.conn.rollback()
+
+    def execute_command(self, name, args):
+        try:
+            # print("EXECUTE {} ({}{}), ({})".format(name, '%s, '*(len(args)-1), '%s', ", ".join(args)))
             self.cur.execute("EXECUTE {} ({}{})".format(name, '%s, '*(len(args)-1), '%s'), args)
         except psycopg2.Error as e:
             print(e, args)

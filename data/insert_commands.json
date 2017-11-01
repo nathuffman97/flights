@@ -1,6 +1,4 @@
 {
-    "trip":"INSERT INTO Trip VALUES (%s,%s,%0.2f)",
-    "flight":"INSERT INTO Flight VALUES (%s,%s,%s,%s,%s,%s)",
-    "dflight":"INSERT INTO ConnectingFlight VALUES()",
-    "tt":"INSERT INTO TripTaker VALUES ()"
+    "trip":"INSERT INTO Trip VALUES ($1,$2,$3)",
+    "flight":"INSERT INTO Flight VALUES ($1,$2,$3,$4,$5,$6)"
 }
