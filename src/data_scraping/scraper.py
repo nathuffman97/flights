@@ -12,8 +12,8 @@ if __name__ == '__main__':
     flight_api = QPX(data_path)
     db = DB(data_path)
     i = 0
-    while True:
-        i = i % 3 + 1
+    while i < 3:
+        i += 1
         start = time.time()
         with open(os.path.join(data_path, '{}.txt'.format(i))) as file:
             for line in file:
@@ -23,6 +23,7 @@ if __name__ == '__main__':
                 result_list = flight_api.make_request(args[0], args[1], args[2])
                 for result in result_list:
                     db.insert_trip_data(result)
-        i += 1
-        end = time.time()
-        time.sleep(tomorrow - (start - end))
+        elapsed = time.time() - start
+        m,s = divmod(elapsed, 60)
+        h,m = divmod(m, 60)
+        open('data.txt','a+').write("Time taken to insert 100 rows: {}h{}m{}s\n".format(int(h), int(m), int(s)))

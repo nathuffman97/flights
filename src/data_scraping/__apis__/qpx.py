@@ -13,7 +13,7 @@ class QPX:
 
     def make_request(self, depart, arrive, date):
         self._package_request(depart, arrive, date)
-        return self._send_requests()
+        return self._send_requests(depart, arrive)
 
     def _get_api_url(self):
         key_location = os.path.join(self.data_path, 'api_url.json')
@@ -35,12 +35,14 @@ class QPX:
             }
         }
 
-    def _send_requests(self):
+    def _send_requests(self, depart, arrive):
         response = self._package_response()
         response = response['trips']
         ret = []
         for temp in response['tripOption']:
             curr_dict = {}
+            curr_dict['origin'] = depart
+            curr_dict['destination'] = arrive
             self._add_root_data(curr_dict, temp)
             self._create_data_lists(curr_dict)
             for __slice in temp['slice']:
@@ -70,3 +72,4 @@ class QPX:
         ret['id'] = temp['id']
         ret['bdate'] = date.today().strftime('%Y-%m-%d')
         ret['total'] = temp['saleTotal']
+

@@ -1,4 +1,4 @@
 {
-    "trip":"INSERT INTO Trip VALUES ($1,$2,$3)",
+    "trip":"INSERT INTO Trip VALUES ($1,$2,$3,$4,$5)",
     "flight":"INSERT INTO Flight VALUES ($1,$2,$3,$4,$5,$6)"
 }
