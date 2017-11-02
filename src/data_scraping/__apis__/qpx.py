@@ -9,20 +9,11 @@ class QPX:
         self.data_path = data_path
         self._url_api = self._get_api_url()
         self.header = {'Content-type': 'application/json'}
-        self.num_requests = (500,)
+        self.num_requests = (100,)
 
     def make_request(self, depart, arrive, date):
         self._package_request(depart, arrive, date)
         return self._send_requests()
-
-    def _confirm_valid_input(self, kwargs):
-        if ('depart', 'arrive', 'date' in kwargs):
-            depart = kwargs['depart']
-            arrive = kwargs['arrive']
-            date = kwargs['date']
-        else:
-            raise TypeError('Values of arrive, depart, and date are required!')
-        return arrive, date, depart
 
     def _get_api_url(self):
         key_location = os.path.join(self.data_path, 'api_url.json')
@@ -40,20 +31,22 @@ class QPX:
                     'destination': arrive,
                     'date': date,
             }],
-                    'solutions': self.num_requests[0]
+                'solutions': self.num_requests[0]
             }
         }
 
     def _send_requests(self):
         response = self._package_response()
-        ret = {}
-        for trip in range(len(response)):
-            for temp in response['trips']['tripOption']:
-                self._add_root_data(ret, temp, trip)
-                self._create_data_lists(ret, trip)
-                for __slice in temp['slice']:
-                    for segment in __slice['segment']:
-                        self._add_flight_data(ret, segment, trip)
+        response = response['trips']
+        ret = []
+        for temp in response['tripOption']:
+            curr_dict = {}
+            self._add_root_data(curr_dict, temp)
+            self._create_data_lists(curr_dict)
+            for __slice in temp['slice']:
+                for segment in __slice['segment']:
+                    self._add_flight_data(curr_dict, segment)
+            ret.append(curr_dict)
         return ret
 
     def _package_response(self):
@@ -62,18 +55,18 @@ class QPX:
         del response['kind']
         return response
 
-    def _add_flight_data(self, ret, segment, trip):
+    def _add_flight_data(self, ret, segment):
         ret['flight_code'].append(segment['flight']['carrier'] + segment['flight']['number'])
         leg = segment['leg'][0]
         ret['airports'].extend([leg['origin'], leg['destination']])
         ret['depart_times'].append(leg['departureTime'])
 
-    def _create_data_lists(self, ret, trip):
+    def _create_data_lists(self, ret):
         ret['flight_code'] = []
         ret['airports'] = []
         ret['depart_times'] = []
 
-    def _add_root_data(self, ret, temp, trip):
+    def _add_root_data(self, ret, temp):
         ret['id'] = temp['id']
         ret['bdate'] = date.today().strftime('%Y-%m-%d')
         ret['total'] = temp['saleTotal']

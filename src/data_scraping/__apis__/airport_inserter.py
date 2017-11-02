@@ -10,7 +10,7 @@ sleep(1)
 data = path.abspath(path.join('..', '..', '..', 'data'))
 
 book = load_workbook(path.join(data, 'airports.xlsx'))
-sheet = book['1']
+sheet = book['1.txt']
 
 print("Connecting...")
 sleep(1)
@@ -18,7 +18,7 @@ ins = Inserter(data)
 
 print("Preparing database...")
 ins.prepare_command("""PREPARE airport_insert AS 
-    INSERT INTO public."Airport" VALUES ($1, $2, $3)""")
+    INSERT INTO public."Airport" VALUES ($1.txt, $2, $3)""")
 
 print('Executing Insert...')
 i = 0
