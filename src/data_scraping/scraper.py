@@ -1,4 +1,5 @@
 import os, time
+from datetime import datetime as dt
 
 from src.data_scraping.__apis__.qpx import QPX
 from src.data_scraping.__apis__.db_writer import DB
@@ -13,16 +14,19 @@ if __name__ == '__main__':
     db = DB(data_path)
     start = time.time()
     trip_list = list()
-    i = 3
-    with open(os.path.join(data_path, '{}.txt'.format(i))) as file:
-        for line in file.readlines():
-            print(line)
-            args = line.split(',')
-            trip_list.append(flight_api.make_request(args[0], args[1], args[2]))
-    db.insert_trip_data(trip_list)
+    i = 0
+    while True:
+        i = (i % 3) + 1
+        with open(os.path.join(data_path, '{}.txt'.format(i))) as file:
+            for line in file.readlines():
+                print(line)
+                args = line.split(',')
+                trip_list.append(flight_api.make_request(args[0], args[1], args[2]))
+        db.insert_trip_data(trip_list)
 
-    elapsed = time.time() - start
-    m,s = divmod(elapsed, 60)
-    h,m = divmod(m, 60)
-    with open('data.txt','a+') as file:
-        file.write("Time taken to insert 100 rows: {}h{}m{}s\n".format(int(h), int(m), int(s)))
+        elapsed = time.time() - start
+        m,s = divmod(elapsed, 60)
+        h,m = divmod(m, 60)
+        with open('log.txt','a+') as file:
+            file.write("{}\tTime taken to insert 100 rows: {}h{}m{}s\n".format(dt.now(), int(h), int(m), int(s)))
+        time.sleep(tomorrow - elapsed)
