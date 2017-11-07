@@ -1,18 +1,16 @@
 import hashlib
-import datetime
+
 
 def trip(arg_dict):
-    ret = []
     bdate = arg_dict['bdate']
     total = arg_dict['total']
     origin = arg_dict['origin']
     destination = arg_dict['destination']
     # Use SHA512 to try our best to make id unique
-    # add time for extra uniqueness in hash
-    s_id = "{}{}{}{}{}".format(bdate,total,origin,destination,datetime.datetime.now())
+    s_id = "{}{}{}{}".format(bdate,total,origin,destination)
     id = hashlib.sha512(s_id.encode('utf-8')).hexdigest()
-    ret.extend([id, bdate,float(total[3:]), origin, destination])
-    return [tuple(ret)]
+    ret = [id, bdate,total[3:],origin,destination]
+    return ",".join(map(str,ret)) + '\n', [id]
 
 
 def flight(arg_dict):
@@ -20,13 +18,16 @@ def flight(arg_dict):
     flight_codes = arg_dict['flight_code']
     carriers = _get_carriers(flight_codes)
     dpt_time = arg_dict['depart_times']
-    ret = []
+    ret = ''
+    ids = list()
     for i in range(len(arrive)):
-        s_id = "{}{}{}{}{}{}".format(depart[i], arrive[i], carriers[i], flight_codes[i], dpt_time[i],
-                                     datetime.datetime.now())
+        t = list()
+        s_id = "{}{}{}{}{}".format(depart[i], arrive[i], carriers[i], flight_codes[i], dpt_time[i])
         id = hashlib.sha512(s_id.encode('utf-8')).hexdigest()
-        ret.append((id, flight_codes[i], dpt_time[i], arrive[i], depart[i], carriers[i]))
-    return ret
+        t.extend([id, flight_codes[i], dpt_time[i], arrive[i], depart[i], carriers[i]])
+        ret += ','.join(map(str, t)) + '\n'
+        ids.append(id)
+    return ret, ids
 
 def _package_aiports(arg_dict):
     airports = arg_dict['airports']

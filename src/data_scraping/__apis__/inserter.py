@@ -42,3 +42,20 @@ class Inserter():
     def close(self):
         self.cur.close()
         self.conn.close()
+
+    def select(self, table):
+        self.cur.execute("""SELECT * FROM {}""".format(table))
+        return self.cur.fetchall()
+
+    def insert_csv(self, file, table):
+        try:
+            self.cur.copy_expert(sql="""
+                CREATE TEMPORARY TABLE temp (LIKE {} EXCLUDING CONSTRAINTS);
+                COPY temp FROM STDIN WITH (DELIMITER ',');
+                INSERT INTO {} SELECT * FROM temp ON CONFLICT DO NOTHING;
+                DROP TABLE temp;""".format(table, table), file=file)
+        except psycopg2.Error as e:
+            self.conn.rollback()
+            print(e)
+        else:
+            self.conn.commit()
