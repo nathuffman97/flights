@@ -1,0 +1,39 @@
+List of Tables:
+
+The tables have remained the same, but the trip table now has the extra columns
+of 'origin' and 'destination' to allow a more intuitive lookup of a trip between
+two ariports. Additionally, all scraped ids are now hashes of the data in the table
+to try and ensure uniquness of the id an not have a running counter, as the number
+of rows would quickly overflow the INTEGER type. Tables with changed schemas are 
+shown below:
+
+trip
+====
+
+id (CHAR(128)) PRIMARY KEY | booking_date (DATE) | price (float) | origin (CHAR(3)) | destination (CHAR(3))
+---------------------------+---------------------+---------------+------------------+----------------------
+
+flight
+======
+
+id (CHAR(128)) PRIMARY KEY | flight_code (VARCHAR 32) | depart_time (TIMESTAMP) | arrive (CHAR 3) | depart (CHAR(3)) | carrier (VARCHAR 64) 
+---------------------------+--------------------------+------------------------+-----------------+------------------+---------------------
+
+connectingflight
+================
+
+flight_id (CHAR 128) REFERENCES flight.id | trip_id (CHAR 128) REFERENCES trip.id
+------------------------------------------+--------------------------------------
+
+triptaker
+=========
+
+pid (INTEGER) REFERENCES people.id | tid (CHAR 128) REFERENCES trip.id
+-----------------------------------+----------------------------------
+
+
+
+
+Indexes:
+
+No performace issues arose, so no changes were made to the DBMS's indexing schema.
