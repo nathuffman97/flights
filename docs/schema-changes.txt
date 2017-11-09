@@ -1,3 +1,9 @@
+The database is being remotely hosted on Amazon Web Services. SQL files containing all
+table declarations as well as the insert statements to mirror the current state of the 
+database are provided in the zip folder db_creation_scripts, while the raw data in CSV format
+is in db_as_csv.zip. Note that the database is over 300,000 rows in it and is nearly 1GB in 
+size, so it might take a long time to load.
+
 List of Tables:
 
 The tables have remained the same, but the trip table now has the extra columns
