@@ -1,10 +1,14 @@
 The assumptions regarding the data have remained unchanged. The new E/R diagram can be found in a separate document.
 
-The database is being remotely hosted on Amazon Web Services. SQL files containing all table declarations as well as the insert statements to mirror the current state of the database are provided in the zip folder db_creation_scripts, while the raw data in CSV format is in db_as_csv.zip. Note that the database is over 300,000 rows in it and is nearly 1GB in 
+The database is being remotely hosted on Amazon Web Services. SQL files containing all table declarations as well as the insert statements to mirror the current state of the 
+database are provided in the zip folder db_creation_scripts, while the raw data in CSV format is in db_as_csv.zip. Note that the database is over 300,000 rows in it and is 
+nearly 1GB in 
 size, so it might take a long time to load.
 
 List of Tables:
-The tables have remained the same, but the trip table now has the extra columns of 'origin' and 'destination' to allow a more intuitive lookup of a trip between two airports. Additionally, all scraped ids are now hashes of the data in the table to try and ensure uniqueness of the id an not have a running counter, as the number of rows would quickly overflow the INTEGER type. Tables with changed schemas are shown below:
+The tables have remained the same, but the trip table now has the extra columns of 'origin' and 'destination' to allow a more intuitive lookup of a trip between two airports.
+Additionally, all scraped ids are now hashes of the data in the table to try and ensure uniqueness of the id an not have a running counter, as the number of rows would quickly 
+overflow the INTEGER type. Tables with changed schemas are shown below:
 
 trip
 ====
