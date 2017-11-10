@@ -3,10 +3,10 @@ CS316 project for Matt Dickson, Ziad Elarab, Sarah Fordham, Nat Huffman, Brian L
 
 ## Getting Started
 
-To load create an instance of the SQL database, use  
-`dropdb flights; createdb flights; psql flights -af create-flights_WITH_DUMMY_DATA.sql`.  
-This creates all tables and triggers, and inserts some placeholder data into them, as well as running some sample queries of the database.
-
+To load an instance of the SQL database, use the .sql scripts in src/sql/db_creation_scripts.zip. 
+This creates all tables and triggers, and inserts some placeholder data into them, as well as running
+some sample queries of the database.Note the data set is very large, and the data is being scraped via 
+the Google Flights API (QPX).
 
 ## Deployment
 
