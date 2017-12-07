@@ -19,6 +19,22 @@
 <head><title>Best Price: From <?= $city1 ?> to <?= $city2 ?></title></head>
 <body>
 
+
+<?php
+   // including FusionCharts PHP wrapper for graphs
+   include("fusioncharts.php");
+?>
+
+<html>
+  <head>
+  <title>FusionCharts XT - Column 2D Chart - Data from a database</title>
+    <link  rel="stylesheet" type="text/css" href="css/style.css" />
+    <!-- including FusionCharts core package JS files -->
+    <script src="fusioncharts.js"></script>
+    <script src="fusioncharts.charts.js"></script>
+  </head>
+</html>
+
 <h1>Best Price: From <?= $city1 ?> to <?= $city2 ?> on <?= $date ?></h1>
 <?php
   try {
@@ -38,17 +54,45 @@
     // A much safer method is to use prepared statements:
     $st = $dbh->prepare("SELECT price, booking_date FROM trip, flight, connectingflight where trip.origin = ? and trip.destination = ? and trip.id = connectingflight.trip_id and flight.id = connectingflight.flight_id and date(flight.depart_time) = ?");
     $st->execute(array($city1, $city2, $date));
+    //printf("\n %d rows \n", $st->rowCount());
+
+
     if ($st->rowCount() == 0) {
       die('There are no flights that fit those in the database.');
     }
+
+
+        // Forming the JSON chart data array needed for the graph plugin to process data 
+  // creating an associative array to store the chart attributes        
+      // The `$arrData` array holds the chart attributes and data
+          $arrData = array(
+              "chart" => array(
+                  "caption" => "Price vs Date",
+                  "showValues" => "0",
+                  "theme" => "zune"
+                )
+            );
+
+    $arrData["data"] = array();
+
+
+
     $myrow = $st->fetch();
 
     $min = 10000000000;
     do{
+      //printf("\n %s \n", $myrow[1]);
       if ($myrow[0] < $min){
         $min = $myrow[0];
         $date = $myrow[1];
       }
+
+array_push($arrData["data"], array(
+            "label" => $myrow[1],
+            "value" => $myrow[0]
+            )
+        );
+
     }
     while ($myrow = $st->fetch());
 
@@ -58,11 +102,42 @@
 
     echo "Booking Date: ", $date;
 
+
+
+
+    // iterating over each data and pushing it into $arrData array
+    //printf("\n %d rows \n", $st->rowCount());
+
+    // $myyrow = $st->fetch();
+    // do {
+    //   printf("\n %s \n", $myyrow[1]);  
+        
+    // }
+    // while ($myyrow = $st->fetch());
+
   } catch (PDOException $e) {
     print "Database error: " . $e->getMessage() . "<br/>";
     die();
   }
+
+
+    //echo sizeof($arrData);
+    $jsonEncodedData = json_encode($arrData);
+
+
+/*Create an object for the column chart using the FusionCharts PHP class constructor. Syntax for the constructor is ` FusionCharts("type of chart", "unique chart id", width of the chart, height of the chart, "div id to render the chart", "data format", "data source")`. Because we are using JSON data to render the chart, the data format will be `json`. The variable `$jsonEncodeData` holds all the JSON data for the chart, and will be passed as the value for the data source parameter of the constructor.*/
+
+          $columnChart = new FusionCharts("column2d", "myFirstChart" , 600, 300, "chart-1", "json", $jsonEncodedData);
+
+          // Render the chart
+          $columnChart->render();
+
+
 ?>
+
+<div id="chart-1"><!-- Fusion Charts will render here--></div>
+
+
 <br><a href='index.php'>Start over</a>
 </body>
 </html>
