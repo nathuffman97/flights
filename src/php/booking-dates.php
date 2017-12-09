@@ -32,6 +32,10 @@
     <!-- including FusionCharts core package JS files -->
     <script src="fusioncharts.js"></script>
     <script src="fusioncharts.charts.js"></script>
+    <script src="fusioncharts.theme.zune.js"></script>
+    <script src="fusioncharts.theme.ocean.js"></script>
+    <script src="fusioncharts.theme.carbon.js"></script>
+    <script src="fusioncharts.theme.fint.js"></script>
   </head>
 </html>
 
@@ -67,9 +71,12 @@
       // The `$arrData` array holds the chart attributes and data
           $arrData = array(
               "chart" => array(
-                  "caption" => "Price vs Date",
+                  "caption" => "Minimum Ticket Price vs. Date",
+                  "xAxisName" => "Date",
+        			"yAxisName" => "Price (In USD)",
+        			"numberPrefix" => "$",
                   "showValues" => "0",
-                  "theme" => "zune"
+                  "theme" => "ocean"
                 )
             );
 
@@ -80,6 +87,10 @@
     $myrow = $st->fetch();
 
     $min = 10000000000;
+
+    $chartMin = 10000000000;
+    $counter = 0;
+
     do{
       //printf("\n %s \n", $myrow[1]);
       if ($myrow[0] < $min){
@@ -87,11 +98,25 @@
         $date = $myrow[1];
       }
 
-array_push($arrData["data"], array(
-            "label" => $myrow[1],
-            "value" => $myrow[0]
+      if ($counter == 0) {
+      	$thisDate = $myrow[1];
+      }
+      
+      if ($thisDate == $myrow[1]) {
+      	if($myrow[0] < $chartMin) {
+      		$chartMin = $myrow[0];
+      	}
+      } else {
+      	array_push($arrData["data"], array(
+            "label" => $thisDate,
+            "value" => $chartMin
             )
         );
+        $thisDate = $myrow[1];
+        $chartMin = $myrow[0];
+      }
+      $counter++;
+		
 
     }
     while ($myrow = $st->fetch());
