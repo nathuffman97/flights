@@ -1,5 +1,9 @@
 <html>
-<head><title>Available Cities</title></head>
+<head>
+  <title>Available Cities</title>
+  <link rel="stylesheet" type="text/css" href="natStyle.css">
+</head>
+
 <body>
 <?php
   if (!isset($_GET['direction'])) {
@@ -16,21 +20,22 @@
     // Including connection info (including database password) from outside
     // the public HTML directory means it is not exposed by the web server,
     // so it is safer than putting it directly in php code:
-    include("/etc/php/7.0/pdo-mine.php");
+    include("pdo-mine.php");
     $dbh = dbconnect();
   } catch (PDOException $e) {
     print "Error connecting to the database: " . $e->getMessage() . "<br/>";
     die();
   }
   try {
-    $st = $dbh->query("SELECT DISTINCT destination FROM trip WHERE NOT destination LIKE 'RDU' ORDER BY destination");
+    $st = $dbh->prepare("SELECT DISTINCT destination FROM trip WHERE NOT destination LIKE ? ORDER BY destination LIMIT 25");
+    $st -> execute(array('RDU'));
     if (($myrow = $st->fetch())) {
 ?>
 
 <?php
   try {
-     $st2 = $dbh->query("SELECT city FROM airport WHERE callsign IN (SELECT DISTINCT destination FROM trip WHERE NOT destination LIKE 'RDU') ORDER BY callsign");
-//     $st2->execute(array($myrow[0]));
+     $st2 =$dbh->prepare("SELECT city FROM airport WHERE callsign IN (SELECT DISTINCT destination FROM trip WHERE NOT destination LIKE ?) ORDER BY callsign LIMIT 25");
+     $st2->execute(array('RDU'));
      $myrow2 = $st2->fetch();
   } catch (PDOException $e) {
      print "Error connecting to the database: " . $e->getMessage() . "<br/>";
@@ -48,6 +53,7 @@ else{
 }
 ?>
 
+<div class="form">
 <form method="post" action="dates.php">
 Select a city:<br/>
 <?php
@@ -60,9 +66,10 @@ Select a city:<br/>
       // Below we will see the use of a "short open tag" that is equivalent
       // to echoing the enclosed expression.
 ?>
-<?= $st->rowCount() ?> city/cities found in the database.<br/>
-<input type="submit" value="GO!"/>
+<br><?= $st->rowCount() ?> city/cities found in the database.<br/>
+<div class="button"> <input type="submit" value="GO!"/></div>
 </form>
+</div>
 <?php
     } else {
       echo "There are no cities in the database.";
@@ -72,6 +79,7 @@ Select a city:<br/>
     die();
   }
 ?>
+
 </body>
 </html>
 
